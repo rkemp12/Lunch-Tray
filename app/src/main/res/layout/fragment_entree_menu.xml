@@ -25,7 +25,10 @@
             name="viewModel"
             type="com.example.lunchtray.model.OrderViewModel" />
 
-        <!-- TODO: Add the data binding variable for the EntreeMenuFragment -->
+        <variable
+            name="EntreeMenuFragment"
+            type="com.example.lunchtray.ui.order.EntreeMenuFragment"/>
+
     </data>
 
 
@@ -55,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:text='@{viewModel.menuItems["cauliflower"].name}'
+                    android:onClick='@{viewModel.setEntree()'
                     tools:text="Entree 1" />
 
                 <TextView
@@ -85,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:text='@{viewModel.menuItems["chili"].name}'
+                    android:onClick='setEntree'
                     tools:text="Entree 2" />
 
                 <TextView
