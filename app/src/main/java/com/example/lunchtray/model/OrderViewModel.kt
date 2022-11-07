@@ -69,30 +69,37 @@ class OrderViewModel : ViewModel() {
      * Set the entree for the order.
      */
     fun setEntree(entree: String) {
-        if (!_entree.equals(null)) {
-            previousEntreePrice = _entree.value!!.price
-        }
-        if (_subtotal.value != null) {
-            _subtotal.value = _subtotal.value?.minus(previousEntreePrice)
-        }
+        // TODO: if _entree.value is not null, set the previous entree price to the current
+        //  entree price.
+        previousEntreePrice = _entree.value?.price ?: 0.0
+
+        // TODO: if _subtotal.value is not null subtract the previous entree price from the current
+        //  subtotal value. This ensures that we only charge for the currently selected entree.
+        _subtotal.value = (_subtotal.value ?: 0.0) - previousEntreePrice
+
+        // TODO: set the current entree value to the menu item corresponding to the passed in string
         _entree.value = menuItems[entree]
-        updateSubtotal(_entree.value?.price!!)
-//        _subtotal.value = _subtotal.value?.plus(menuItems[entree]?.price!!)
+
+        // TODO: update the subtotal to reflect the price of the selected entree.
+        updateSubtotal(menuItems[entree]?.price ?: 0.0)
     }
 
     /**
      * Set the side for the order.
      */
     fun setSide(side: String) {
-        if (!_side.equals(null)) {
-            previousSidePrice = _side.value!!.price
-        }
-        if (_subtotal.value != null) {
-            _subtotal.value = _subtotal.value?.minus(previousSidePrice)
-        }
+        // TODO: if _side.value is not null, set the previous side price to the current side price.
+        previousSidePrice = _side.value?.price ?: 0.0
+
+        // TODO: if _subtotal.value is not null subtract the previous side price from the current
+        //  subtotal value. This ensures that we only charge for the currently selected side.
+        _subtotal.value = (_subtotal.value ?: 0.0) - previousSidePrice
+
+        // TODO: set the current side value to the menu item corresponding to the passed in string
         _side.value = menuItems[side]
-        updateSubtotal(_side.value?.price!!)
-//        _subtotal.value = _subtotal.value?.plus(menuItems[side]?.price!!)
+
+        // TODO: update the subtotal to reflect the price of the selected side.
+        updateSubtotal(menuItems[side]?.price ?: 0.0)
 
     }
 
@@ -100,26 +107,37 @@ class OrderViewModel : ViewModel() {
      * Set the accompaniment for the order.
      */
     fun setAccompaniment(accompaniment: String) {
-        if (!_accompaniment.equals(null)) {
-            previousAccompanimentPrice = _accompaniment.value!!.price
-        }
-        if (_subtotal.value != null) {
-            _subtotal.value = _subtotal.value?.minus(previousAccompanimentPrice)
-        }
+        // TODO: if _accompaniment.value is not null, set the previous accompaniment price to the
+        //  current accompaniment price.
+        previousAccompanimentPrice = _accompaniment.value?.price ?: 0.0
+
+        // TODO: if _accompaniment.value is not null subtract the previous accompaniment price from
+        //  the current subtotal value. This ensures that we only charge for the currently selected
+        //  accompaniment.
+        _subtotal.value = (_subtotal.value ?: 0.0) - previousAccompanimentPrice
+
+        // TODO: set the current accompaniment value to the menu item corresponding to the passed in
+        //  string
         _accompaniment.value = menuItems[accompaniment]
-        updateSubtotal(_accompaniment.value?.price!!)
-//        _subtotal.value = _subtotal.value?.plus(menuItems[accompaniment]?.price!!)
+
+        // TODO: update the subtotal to reflect the price of the selected accompaniment.
+        updateSubtotal(menuItems[accompaniment]?.price ?: 0.0)
     }
 
     /**
      * Update subtotal value.
      */
     private fun updateSubtotal(itemPrice: Double) {
-        if (!_subtotal.value?.equals(null)!!) {
-            _subtotal.value = _subtotal.value?.plus(itemPrice)
-        } else {
+        // TODO: if _subtotal.value is not null, update it to reflect the price of the recently
+        //  added item.
+        //  Otherwise, set _subtotal.value to equal the price of the item.
+        if (_subtotal.value != null){
+            _subtotal.value = _subtotal.value!! + itemPrice
+        }
+        else{
             _subtotal.value = itemPrice
         }
+        // TODO: calculate the tax and resulting total
         calculateTaxAndTotal()
     }
 
@@ -128,7 +146,7 @@ class OrderViewModel : ViewModel() {
      */
     fun calculateTaxAndTotal() {
         _tax.value = _subtotal.value?.times(taxRate)
-        _total.value = _subtotal.value?.plus(_tax.value!!)
+        _total.value = _subtotal.value?.plus(_tax.value ?: 0.0)
     }
 
     /**
